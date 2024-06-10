@@ -3,12 +3,12 @@ package io.github.alextony_cloud.surcars.api.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import io.github.alextony_cloud.surcars.api.entity.Usuario;
 import io.github.alextony_cloud.surcars.api.entity.dto.UsuarioDTO;
 import io.github.alextony_cloud.surcars.api.repository.UsuarioRepository;
+import io.github.alextony_cloud.surcars.api.service.exceptions.DataIntegrityViolationException;
 import io.github.alextony_cloud.surcars.api.service.exceptions.ObjectNotFoundException;
 
 @Service
@@ -47,7 +47,6 @@ public class UsuarioService {
 
 	public void delete(Long id) {
 		repository.findById(id).map(usuario -> {
-			if(usuario.getCars().size() > 0) throw new DataIntegrityViolationException("Cliente possui carros associados e não pode ser deletado!");
 			repository.delete(usuario);
 			return usuario;
 		}).orElseThrow(() -> new ObjectNotFoundException("Object not found: " + id));

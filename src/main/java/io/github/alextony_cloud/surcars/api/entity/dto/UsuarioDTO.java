@@ -58,8 +58,7 @@ private String phone;
 		this.email = obj.getEmail();
 		this.birthday = obj.getBirthday();
 		this.login = obj.getLogin();
+		this.password = "-";
 		this.phone = obj.getPhone();
 	}
-	
-	
 }
