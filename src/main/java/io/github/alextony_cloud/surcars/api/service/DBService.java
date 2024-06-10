@@ -22,9 +22,10 @@ public class DBService {
 	public void instanciaDB() {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		Usuario u1 = new Usuario(null,"Paulo","Abrão","paulo@mail.com",LocalDate.parse("05/08/1993",formatter),"pauloX","123","81009666894", null);
 		Carro car1 = new Carro(null,2014,"PDV-1020","Ford","Azul Marinho");
-		u1.addCars(car1);
+		Usuario u1 = new Usuario(null,"Paulo","Abrão","paulo@mail.com",LocalDate.parse("05/08/1993",formatter),"pauloX","123","81009666894");
+		
+		u1.getCars().add(car1);
 		
 		usuarioRepository.saveAll(Arrays.asList(u1));
 		carroRepository.saveAll(Arrays.asList(car1));

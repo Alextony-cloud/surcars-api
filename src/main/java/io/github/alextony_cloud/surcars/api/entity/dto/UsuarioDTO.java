@@ -3,7 +3,12 @@ package io.github.alextony_cloud.surcars.api.entity.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.Column;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.Length;
 
 import io.github.alextony_cloud.surcars.api.entity.Usuario;
 import lombok.Data;
@@ -15,13 +20,31 @@ public class UsuarioDTO implements Serializable {
 
 private Long id;
 	
-	private String firstName;
-	private String lastName;
-	private String email;
-	private LocalDate birthday;
-	private String login;
-	private String password;
-	private String phone;
+@NotBlank(message = "Missing fields")
+@Length(min = 3, max = 100, message = "The FIRSTNAME field must be between 3 and 100 characters long")
+private String firstName;
+
+@NotBlank(message = "Missing fields")
+@Length(min = 3, max = 100, message = "The LASTNAME field must be between 3 and 100 characters long")
+private String lastName;
+
+@NotBlank(message = "Missing fields")
+@Email(message = "Invalid fields")
+private String email;
+
+@NotNull(message = "Missing fields")
+@Past
+private LocalDate birthday;
+
+@NotBlank(message = "Missing fields")
+private String login;
+
+@NotBlank(message = "Missing fields")
+private String password;
+
+@NotBlank(message = "Missing fields")
+private String phone;
+
 
 	public UsuarioDTO() {
 		super();

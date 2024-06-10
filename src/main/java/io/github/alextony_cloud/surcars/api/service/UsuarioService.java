@@ -29,29 +29,38 @@ public class UsuarioService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado: " + id));
 	}
 
-	public Usuario create(Usuario usuario) {
-		usuario.setId(null);
-		return repository.save(usuario);
+	public Usuario create(UsuarioDTO usuarioDTO) {
+		usuarioDTO.setId(null);
+		validByEmailAndLogin(usuarioDTO);
+		Usuario newUsuario = new Usuario(usuarioDTO);
+		return repository.save(newUsuario);
 	}
 
 	public Usuario update(Long id, UsuarioDTO usuarioDTO) {
-		Usuario obj = findById(id);
-		obj.setFirstName(usuarioDTO.getFirstName());
-		obj.setLastName(usuarioDTO.getLastName());
-		obj.setEmail(usuarioDTO.getEmail());
-		obj.setBirthday(usuarioDTO.getBirthday());
-		obj.setLogin(usuarioDTO.getLogin());
-		obj.setPassword(usuarioDTO.getPassword());
-		obj.setPhone(usuarioDTO.getPhone());
-		return repository.save(obj);
+		usuarioDTO.setId(id);
+		Usuario oldUsuario = findById(id);
+		validByEmailAndLogin(usuarioDTO);
+		oldUsuario = new Usuario(usuarioDTO);
+		return repository.save(oldUsuario);
 	}
+
 
 	public void delete(Long id) {
 		repository.findById(id).map(usuario -> {
 			if(usuario.getCars().size() > 0) throw new DataIntegrityViolationException("Cliente possui carros associados e não pode ser deletado!");
 			repository.delete(usuario);
 			return usuario;
-		}).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado: " + id));
+		}).orElseThrow(() -> new ObjectNotFoundException("Object not found: " + id));
 	}
 
+	private void validByEmailAndLogin(UsuarioDTO usuarioDTO) {
+		Optional<Usuario> obj = repository.findByEmail(usuarioDTO.getEmail());
+		if (obj.isPresent() && obj.get().getId() != usuarioDTO.getId()) {
+			throw new DataIntegrityViolationException("Email already exists");
+		}
+		obj = repository.findByLogin(usuarioDTO.getEmail());
+		if(obj.isPresent() && obj.get().getId() != usuarioDTO.getId()) {
+			throw new DataIntegrityViolationException("Login already exists");
+		}
+	}
 }
