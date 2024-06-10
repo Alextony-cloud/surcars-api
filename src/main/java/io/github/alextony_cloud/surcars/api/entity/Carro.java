@@ -8,12 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Carro implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -26,20 +28,12 @@ public class Carro implements Serializable{
 	private Integer year;
 	
 	@Column(length = 8, nullable = false)
-	private String licencePlate;
+	private String licensePlate;
 	
 	@Column(length = 20, nullable = false)
 	private String model;
 	
 	@Column(nullable = false)
 	private String color;
-	
-	public Carro(Long id, Integer year, String licencePlate, String model, String color) {
-		this.id = id;
-		this.year = year;
-		this.licencePlate = licencePlate;
-		this.model = model;
-		this.color = color;
-	}
 	
 }

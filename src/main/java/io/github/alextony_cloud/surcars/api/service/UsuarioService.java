@@ -3,6 +3,8 @@ package io.github.alextony_cloud.surcars.api.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 
 import io.github.alextony_cloud.surcars.api.entity.Usuario;
@@ -28,6 +30,11 @@ public class UsuarioService {
 		} else {
 			return null;
 		}
+	}
+
+	public Usuario create(@Valid Usuario usuario) {
+		usuario.setId(null);
+		return repository.save(usuario);
 	}
 
 }
