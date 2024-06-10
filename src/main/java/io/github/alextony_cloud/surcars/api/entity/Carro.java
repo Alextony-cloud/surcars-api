@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,15 +27,19 @@ public class Carro implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull(message = "Missing fields")
 	@Column(length = 4, nullable = false)
 	private Integer year;
 	
-	@Column(length = 8, nullable = false)
+	@NotBlank(message = "Missing fields")
+	@Column(length = 8, nullable = false, unique = true)
 	private String licensePlate;
 	
+	@NotBlank(message = "Missing fields")
 	@Column(length = 20, nullable = false)
 	private String model;
 	
+	@NotBlank(message = "Missing fields")
 	@Column(nullable = false)
 	private String color;
 	

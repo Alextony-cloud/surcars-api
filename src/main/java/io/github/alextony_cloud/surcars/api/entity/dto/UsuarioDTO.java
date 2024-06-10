@@ -7,8 +7,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.github.alextony_cloud.surcars.api.entity.Usuario;
 import lombok.Data;
@@ -22,10 +25,12 @@ private Long id;
 	
 @NotBlank(message = "Missing fields")
 @Length(min = 3, max = 100, message = "The FIRSTNAME field must be between 3 and 100 characters long")
+@Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ]+$", message = "the FIRSTNAME field does not accept numbers or special characters")
 private String firstName;
 
 @NotBlank(message = "Missing fields")
 @Length(min = 3, max = 100, message = "The LASTNAME field must be between 3 and 100 characters long")
+@Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ]+$", message = "the LASTNAME field does not accept numbers or special characters")
 private String lastName;
 
 @NotBlank(message = "Missing fields")
@@ -34,6 +39,7 @@ private String email;
 
 @NotNull(message = "Missing fields")
 @Past
+@JsonFormat(pattern = "dd/MM/yyyy")
 private LocalDate birthday;
 
 @NotBlank(message = "Missing fields")

@@ -39,15 +39,15 @@ public class Usuario implements Serializable{
 	private Long id;
 	
 	@NotBlank(message = "Missing fields")
-	@Length(min = 3, max = 100, message = "O campo FIRSTNAME deve ter entre 3 e 100 caracteres")
+	@Length(min = 3, max = 100, message = "The FIRSTNAME field must be between 3 and 100 characters long")
 	@Column(length = 100, nullable = false)
-	@Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ]+$")
+	@Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ]+$", message = "the FIRSTNAME field does not accept numbers or special characters")
 	private String firstName;
 	
 	@NotBlank(message = "Missing fields")
-	@Length(min = 3, max = 100, message = "O campo LASTNAME deve ter entre 3 e 100 caracteres")
+	@Length(min = 3, max = 100, message = "The LASTNAME field must be between 3 and 100 characters long")
 	@Column(length = 100, nullable = false)
-	@Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ]+$")
+	@Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ]+$", message = "the LASTNAME field does not accept numbers or special characters")
 	private String lastName;
 	
 	@NotBlank(message = "Missing fields")
