@@ -1,5 +1,6 @@
 package io.github.alextony_cloud.surcars.api.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +16,15 @@ import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @AllArgsConstructor
-public class Usuario {
+@NoArgsConstructor
+public class Usuario implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +45,7 @@ public class Usuario {
 	@Column(length = 40, nullable = false, unique = true)
 	private String login;
 	
-	@Column(length = 100, nullable = false, unique = true)
+	@Column(length = 100, nullable = false)
 	private String password;
 	
 	@Column(length = 11, nullable = false, unique = true)
