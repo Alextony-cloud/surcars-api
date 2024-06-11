@@ -2,6 +2,7 @@ package io.github.alextony_cloud.surcars.api.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -21,6 +23,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.github.alextony_cloud.surcars.api.entity.dto.UsuarioDTO;
 import lombok.Data;
@@ -63,7 +66,8 @@ public class Usuario implements Serializable{
 	@NotBlank(message = "Missing fields")
 	@Column(length = 40, nullable = false, unique = true)
 	private String login;
-	
+
+	@JsonIgnore
 	@NotBlank(message = "Missing fields")
 	@Column(length = 100, nullable = false)
 	private String password;
@@ -74,9 +78,11 @@ public class Usuario implements Serializable{
 	
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") // CascadeType.ALL pode ser ajustado conforme necessário
-	
-    
 	private List<Carro> cars = new ArrayList<>();
+	
+	 private LocalDateTime createdAt;
+	 
+	 private LocalDateTime lastLogin;
 
 
 	public Usuario(Long id, String firstName, String lastName, String email, LocalDate birthday, String login, String password, String phone) {
@@ -102,4 +108,13 @@ public class Usuario implements Serializable{
 		this.password = obj.getPassword();
 		this.phone = obj.getPhone();
 	}
+	
+	@PrePersist
+	public void prePersist() {
+		setCreatedAt(LocalDateTime.now());
+	}
+	
+	public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
+    }
 }

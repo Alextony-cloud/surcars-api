@@ -1,7 +1,10 @@
 package io.github.alextony_cloud.surcars.api.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,8 +22,6 @@ public class UsuarioService {
 
 	private final UsuarioRepository repository;
 	private final BCryptPasswordEncoder encoder;
-	
-	
 
 	public List<Usuario> findAll() {
 		return repository.findAll();
@@ -48,7 +49,6 @@ public class UsuarioService {
 		return repository.save(oldUsuario);
 	}
 
-
 	public void delete(Long id) {
 		repository.findById(id).map(usuario -> {
 			repository.delete(usuario);
@@ -62,8 +62,20 @@ public class UsuarioService {
 			throw new DataIntegrityViolationException("Email already exists");
 		}
 		obj = repository.findByLogin(usuarioDTO.getEmail());
-		if(obj.isPresent() && obj.get().getId() != usuarioDTO.getId()) {
+		if (obj.isPresent() && obj.get().getId() != usuarioDTO.getId()) {
 			throw new DataIntegrityViolationException("Login already exists");
 		}
+	}
+
+	public Usuario findByLogin(String login) {
+		Optional<Usuario> usuario = repository.findByLogin(login);
+		return usuario.orElseThrow(() -> new ObjectNotFoundException("User not found: " + login));
+	}
+
+	@Transactional
+	public void updateLastLogin(String login) {
+		Usuario usuario = findByLogin(login);
+		usuario.setLastLogin(LocalDateTime.now());
+		repository.save(usuario);
 	}
 }
