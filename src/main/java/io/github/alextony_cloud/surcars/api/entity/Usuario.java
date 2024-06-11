@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -74,8 +73,9 @@ public class Usuario implements Serializable{
 	private String phone;
 	
 	
-	@OneToMany(cascade = CascadeType.ALL) // CascadeType.ALL pode ser ajustado conforme necessário
-    @JoinColumn(name = "usuario_id") // Especifica a coluna na tabela de Carro que referencia a tabela de Usuario
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") // CascadeType.ALL pode ser ajustado conforme necessário
+	
+    
 	private List<Carro> cars = new ArrayList<>();
 
 

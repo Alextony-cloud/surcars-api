@@ -26,7 +26,7 @@ public class UsuarioService {
 
 	public Usuario findById(Long id) {
 		Optional<Usuario> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado: " + id));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found: " + id));
 	}
 
 	public Usuario create(UsuarioDTO usuarioDTO) {
