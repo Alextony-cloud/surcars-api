@@ -24,7 +24,7 @@ public class CarroDTO implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ApiModelProperty(value = "Ano do carro", example = "2024")
+	@ApiModelProperty(value = "Ano de fabricação carro", example = "2024")
 	@NotNull(message = "Missing fields")
 	private Integer year;
 	
@@ -36,11 +36,11 @@ public class CarroDTO implements Serializable {
 	@NotBlank(message = "Missing fields")
 	private String model;
 	
-	@ApiModelProperty(value = "Cor do carro", example = "Azul")
+	@ApiModelProperty(value = "Cor predominante do carro", example = "Azul")
 	@NotBlank(message = "Missing fields")
 	private String color;
 	
-	@ApiModelProperty(value = "Usuario que é cadastrou o carro", example = "Paulo")
+	@ApiModelProperty(value = "Usuario que cadastrou o carro", example = "Paulo")
 	@NotNull(message = "the field is required")
 	private Long user;
 

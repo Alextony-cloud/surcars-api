@@ -29,16 +29,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private final JWTUtil jwtUtil;
 	
 	private final UserDetailsService userDetailsService;
+	
+	private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
 	private static final String[] PUBLIC_MATCHERS = {"/h2-console/**"};
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().disable();
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.cors().and().csrf().disable()
 		.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil))
-		.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
-		http.authorizeRequests(authorize -> authorize
+		.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService))
+		.authorizeRequests(authorize -> authorize
 				.antMatchers(HttpMethod.GET, "/api/cars").authenticated()
 				.antMatchers(HttpMethod.GET, "/api/cars/{id}").authenticated()
 				.antMatchers(HttpMethod.GET, "/api/user/me").authenticated()
@@ -46,8 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(HttpMethod.PUT, "/api/cars/{id}").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/api/cars/{id}").authenticated()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
-                .anyRequest().permitAll());
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .anyRequest().permitAll())
+		.exceptionHandling()
+		.authenticationEntryPoint(authenticationEntryPoint);
 	}
 	
 	@Override

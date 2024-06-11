@@ -41,7 +41,7 @@ public class UsuarioDTO implements Serializable {
 	@Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ]+$", message = "the LASTNAME field does not accept numbers or special characters")
 	private String lastName;
 
-	@ApiModelProperty(value = "Email do usuário", example = "Joao@mail.com")
+	@ApiModelProperty(value = "E-mail do usuário", example = "Joao@mail.com")
 	@NotBlank(message = "Missing fields")
 	@Email(message = "Invalid fields")
 	private String email;
@@ -64,7 +64,7 @@ public class UsuarioDTO implements Serializable {
 	@NotBlank(message = "Missing fields")
 	private String phone;
 
-	@ApiModelProperty(value = "Carros do usuário", example = "Ford,Fiat,Honda")
+	@ApiModelProperty(value = "Lista de carros do usuário", example = "Ford,Fiat,Honda")
 	private List<Long> cars;
 
 	public UsuarioDTO() {
