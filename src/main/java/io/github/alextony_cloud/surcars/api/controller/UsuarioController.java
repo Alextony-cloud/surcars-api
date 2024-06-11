@@ -20,17 +20,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.github.alextony_cloud.surcars.api.entity.Usuario;
 import io.github.alextony_cloud.surcars.api.entity.dto.UsuarioDTO;
 import io.github.alextony_cloud.surcars.api.service.UsuarioService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/users")
 public class UsuarioController {
 
-	private UsuarioService service;
+	private final UsuarioService service;
 	
-	public UsuarioController(UsuarioService service) {
-		this.service = service;
-	}
-
 	@GetMapping
 	public ResponseEntity<List<UsuarioDTO>> findAll(){
 		List<Usuario> list = this.service.findAll();

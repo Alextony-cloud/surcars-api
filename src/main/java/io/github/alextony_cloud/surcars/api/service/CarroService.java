@@ -11,17 +11,16 @@ import io.github.alextony_cloud.surcars.api.entity.dto.CarroDTO;
 import io.github.alextony_cloud.surcars.api.repository.CarroRepository;
 import io.github.alextony_cloud.surcars.api.service.exceptions.DataIntegrityViolationException;
 import io.github.alextony_cloud.surcars.api.service.exceptions.ObjectNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CarroService {
 
-	private CarroRepository repository;
-	private UsuarioService usuarioService;
+	private final CarroRepository repository;
+	private final UsuarioService usuarioService;
 	
-	public CarroService(CarroRepository repository, UsuarioService usuarioService) {
-		this.repository = repository;
-		this.usuarioService = usuarioService;
-	}
+	
 
 	public List<Carro> findAll() {
 		return repository.findAll();

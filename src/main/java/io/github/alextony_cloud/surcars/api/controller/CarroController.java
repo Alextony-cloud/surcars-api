@@ -20,16 +20,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.github.alextony_cloud.surcars.api.entity.Carro;
 import io.github.alextony_cloud.surcars.api.entity.dto.CarroDTO;
 import io.github.alextony_cloud.surcars.api.service.CarroService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/cars")
 public class CarroController {
 
-	private CarroService service;
+	private final CarroService service;
 	
-	public CarroController(CarroService service) {
-		this.service = service;
-	}
 
 	@GetMapping
 	public ResponseEntity<List<CarroDTO>> findAll(){

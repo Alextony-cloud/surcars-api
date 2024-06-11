@@ -3,6 +3,7 @@ package io.github.alextony_cloud.surcars.api.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import io.github.alextony_cloud.surcars.api.entity.Usuario;
@@ -10,15 +11,16 @@ import io.github.alextony_cloud.surcars.api.entity.dto.UsuarioDTO;
 import io.github.alextony_cloud.surcars.api.repository.UsuarioRepository;
 import io.github.alextony_cloud.surcars.api.service.exceptions.DataIntegrityViolationException;
 import io.github.alextony_cloud.surcars.api.service.exceptions.ObjectNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
 
-	private UsuarioRepository repository;
+	private final UsuarioRepository repository;
+	private final BCryptPasswordEncoder encoder;
 	
-	public UsuarioService(UsuarioRepository repository) {
-		this.repository = repository;
-	}
+	
 
 	public List<Usuario> findAll() {
 		return repository.findAll();
@@ -31,6 +33,7 @@ public class UsuarioService {
 
 	public Usuario create(UsuarioDTO usuarioDTO) {
 		usuarioDTO.setId(null);
+		usuarioDTO.setPassword(encoder.encode(usuarioDTO.getPassword()));
 		validByEmailAndLogin(usuarioDTO);
 		Usuario newUsuario = new Usuario(usuarioDTO);
 		return repository.save(newUsuario);
@@ -38,6 +41,7 @@ public class UsuarioService {
 
 	public Usuario update(Long id, UsuarioDTO usuarioDTO) {
 		usuarioDTO.setId(id);
+		usuarioDTO.setPassword(encoder.encode(usuarioDTO.getPassword()));
 		Usuario oldUsuario = findById(id);
 		validByEmailAndLogin(usuarioDTO);
 		oldUsuario = new Usuario(usuarioDTO);
