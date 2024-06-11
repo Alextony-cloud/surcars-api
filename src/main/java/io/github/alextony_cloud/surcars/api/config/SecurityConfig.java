@@ -3,7 +3,9 @@ package io.github.alextony_cloud.surcars.api.config;
 import java.util.Arrays;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,10 +17,12 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import io.github.alextony_cloud.surcars.security.JWTAuthenticationFilter;
+import io.github.alextony_cloud.surcars.security.JWTAuthorizationFilter;
 import io.github.alextony_cloud.surcars.security.JWTUtil;
 import lombok.RequiredArgsConstructor;
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
@@ -31,10 +35,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().disable();
-		http.cors().and().csrf().disable();
-		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
-		http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll()
-		.anyRequest().authenticated();
+		http.cors().and().csrf().disable()
+		.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil))
+		.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
+		http.authorizeRequests(authorize -> authorize
+				.antMatchers(HttpMethod.GET, "/api/cars/id").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/cars").authenticated()
+                .antMatchers(HttpMethod.PUT, "/api/cars/id").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/api/cars/id").authenticated()
+                .antMatchers(PUBLIC_MATCHERS).permitAll()
+                .anyRequest().permitAll());
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
