@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.github.alextony_cloud.surcars.api.entity.Usuario;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@ApiModel(value = "UsuarioLogado", description = "Representa um usuario Logado")
 public class UserResponseDTO {
     
 	private String firstName;

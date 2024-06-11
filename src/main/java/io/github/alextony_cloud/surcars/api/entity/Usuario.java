@@ -23,7 +23,6 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.github.alextony_cloud.surcars.api.entity.dto.UsuarioDTO;
 import lombok.Data;
@@ -67,7 +66,6 @@ public class Usuario implements Serializable{
 	@Column(length = 40, nullable = false, unique = true)
 	private String login;
 
-	@JsonIgnore
 	@NotBlank(message = "Missing fields")
 	@Column(length = 100, nullable = false)
 	private String password;
