@@ -39,10 +39,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil))
 		.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		http.authorizeRequests(authorize -> authorize
-				.antMatchers(HttpMethod.GET, "/api/cars/id").authenticated()
+				.antMatchers(HttpMethod.GET, "/api/cars").authenticated()
+				.antMatchers(HttpMethod.GET, "/api/cars/{id}").authenticated()
                 .antMatchers(HttpMethod.POST, "/api/cars").authenticated()
-                .antMatchers(HttpMethod.PUT, "/api/cars/id").authenticated()
-                .antMatchers(HttpMethod.DELETE, "/api/cars/id").authenticated()
+                .antMatchers(HttpMethod.PUT, "/api/cars/{id}").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/api/cars/{id}").authenticated()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .anyRequest().permitAll());
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
