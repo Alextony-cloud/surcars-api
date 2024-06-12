@@ -11,6 +11,6 @@ FROM openjdk:11-jdk-slim-sid
 
 EXPOSE 8080
 
-COPY --from=build /target/surcars-api-1.0.0.jar app.jar
+COPY --from=build /target/surcars-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT [ "java", "-jar", "app.jar" ]
