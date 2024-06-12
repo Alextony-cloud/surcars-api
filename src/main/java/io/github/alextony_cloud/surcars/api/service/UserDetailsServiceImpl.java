@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import io.github.alextony_cloud.surcars.api.entity.Usuario;
 import io.github.alextony_cloud.surcars.api.repository.UsuarioRepository;
-import io.github.alextony_cloud.surcars.security.UserSS;
+import io.github.alextony_cloud.surcars.api.security.UserSS;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

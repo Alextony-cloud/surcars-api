@@ -16,9 +16,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import io.github.alextony_cloud.surcars.security.JWTAuthenticationFilter;
-import io.github.alextony_cloud.surcars.security.JWTAuthorizationFilter;
-import io.github.alextony_cloud.surcars.security.JWTUtil;
+import io.github.alextony_cloud.surcars.api.security.JWTAuthenticationFilter;
+import io.github.alextony_cloud.surcars.api.security.JWTAuthorizationFilter;
+import io.github.alextony_cloud.surcars.api.security.JWTUtil;
 import lombok.RequiredArgsConstructor;
 
 @EnableWebSecurity

@@ -1,4 +1,4 @@
-package io.github.alextony_cloud.surcars.security;
+package io.github.alextony_cloud.surcars.api.security;
 
 
 import java.util.Date;
