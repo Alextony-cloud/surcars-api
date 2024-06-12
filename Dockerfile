@@ -1,16 +1,9 @@
-FROM ubuntu:latest AS build
-
-RUN apt-get update
-RUN apt-get install openjdk-11-jdk -y
+FROM maven:3.8.6-openjdk-11 AS build
+WORKDIR /app
 COPY . .
+RUN mvn clean package -X -DskipTests
 
-RUN apt-get install maven -y
-RUN mvn clean install 
-
-FROM openjdk:11-jdk-slim-sid
-
-EXPOSE 8080
-
-COPY --from=build /target/surcars-0.0.1-SNAPSHOT.jar app.jar
-
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+FROM openjdk:11-jdk-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar ./surcars-0.0.1-SNAPSHOT.jar
+ENTRYPOINT java -jar surcars-0.0.1-SNAPSHOT.jar.jar
