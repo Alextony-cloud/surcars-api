@@ -49,6 +49,7 @@ public class Carro implements Serializable{
 	@Column(nullable = false)
 	private String color;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;

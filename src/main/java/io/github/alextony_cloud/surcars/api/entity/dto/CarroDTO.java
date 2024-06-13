@@ -44,6 +44,7 @@ public class CarroDTO implements Serializable {
 	@NotBlank(message = "Missing fields")
 	private String color;
 	
+	@JsonIgnore
 	private Usuario usuario;
 	
 	
