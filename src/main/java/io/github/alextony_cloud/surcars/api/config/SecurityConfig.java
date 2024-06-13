@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.headers().frameOptions().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.cors().and().csrf().disable()
-		.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil))
+		.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil, "/signin"))
 		.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService))
 		.authorizeRequests(authorize -> authorize
 				.antMatchers(HttpMethod.GET, "/api/cars").authenticated()
@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(HttpMethod.POST, "/api/cars").authenticated()
                 .antMatchers(HttpMethod.PUT, "/api/cars/{id}").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/api/cars/{id}").authenticated()
+                .antMatchers(HttpMethod.POST, "/signin").permitAll()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .anyRequest().permitAll())
 		.exceptionHandling()

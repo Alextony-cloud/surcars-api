@@ -22,13 +22,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.alextony_cloud.surcars.api.entity.dto.CredenciaisDTO;
 import io.github.alextony_cloud.surcars.api.service.UsuarioService;
 import io.github.alextony_cloud.surcars.api.service.exceptions.BadCredentialsException;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
+
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	private AuthenticationManager authenticationManager;
 	private JWTUtil jwtUtil;
+	@SuppressWarnings("unused")
+	private String endpoint;
+	
+	
+	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil, String endpoint) {
+		super();
+		this.authenticationManager = authenticationManager;
+		this.jwtUtil = jwtUtil;
+		this.endpoint = endpoint;
+		setFilterProcessesUrl(endpoint);
+	}
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
