@@ -61,7 +61,7 @@ public class UsuarioService {
 		if (obj.isPresent() && obj.get().getId() != usuarioDTO.getId()) {
 			throw new DataIntegrityViolationException("Email already exists");
 		}
-		obj = repository.findByLogin(usuarioDTO.getEmail());
+		obj = repository.findByLogin(usuarioDTO.getLogin());
 		if (obj.isPresent() && obj.get().getId() != usuarioDTO.getId()) {
 			throw new DataIntegrityViolationException("Login already exists");
 		}

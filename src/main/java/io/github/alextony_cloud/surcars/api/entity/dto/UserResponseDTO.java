@@ -3,8 +3,8 @@ package io.github.alextony_cloud.surcars.api.entity.dto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import io.github.alextony_cloud.surcars.api.entity.Carro;
 import io.github.alextony_cloud.surcars.api.entity.Usuario;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -21,7 +21,7 @@ public class UserResponseDTO {
     private LocalDate birthday;
     private String login;
     private String phone;
-    private List<Long> cars;
+    private List<Carro> cars;
     private LocalDateTime createdAt;
     private LocalDateTime lastLogin;
 	
@@ -34,7 +34,7 @@ public class UserResponseDTO {
 		this.birthday = obj.getBirthday();
 		this.login = obj.getLogin();
 		this.phone = obj.getPhone();
-		this.cars = obj.getCars().stream().map(x -> x.getId()).collect(Collectors.toList());
+		this.cars = obj.getCars();
 		this.createdAt = obj.getCreatedAt();
 		this.lastLogin = obj.getLastLogin();
 	}

@@ -8,7 +8,10 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.github.alextony_cloud.surcars.api.entity.Carro;
+import io.github.alextony_cloud.surcars.api.entity.Usuario;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,6 +23,7 @@ public class CarroDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@JsonIgnore
 	@ApiModelProperty(value = "ID do carro", example = "1")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -40,10 +44,9 @@ public class CarroDTO implements Serializable {
 	@NotBlank(message = "Missing fields")
 	private String color;
 	
-	@ApiModelProperty(value = "Usuario que cadastrou o carro", example = "Paulo")
-	@NotNull(message = "the field is required")
-	private Long user;
-
+	private Usuario usuario;
+	
+	
 	public CarroDTO() {
 		super();
 	}
@@ -55,7 +58,7 @@ public class CarroDTO implements Serializable {
 		this.licensePlate = obj.getLicensePlate();
 		this.model = obj.getModel();
 		this.color = obj.getColor();
-		this.user = obj.getUser().getId();
+		this.usuario = obj.getUsuario();
 	}
 
 	

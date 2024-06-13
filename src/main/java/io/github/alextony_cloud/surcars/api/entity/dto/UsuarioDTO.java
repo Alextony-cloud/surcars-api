@@ -2,8 +2,8 @@ package io.github.alextony_cloud.surcars.api.entity.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,7 +14,9 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.github.alextony_cloud.surcars.api.entity.Carro;
 import io.github.alextony_cloud.surcars.api.entity.Usuario;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,6 +28,7 @@ public class UsuarioDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@JsonIgnore
 	@ApiModelProperty(value = "ID do usuário", example = "1")
 	private Long id;
 
@@ -63,10 +66,10 @@ public class UsuarioDTO implements Serializable {
 	@ApiModelProperty(value = "Telefone do usuário", example = "81999999999")
 	@NotBlank(message = "Missing fields")
 	private String phone;
-
+	
 	@ApiModelProperty(value = "Lista de carros do usuário", example = "Ford,Fiat,Honda")
-	private List<Long> cars;
-
+	private List<Carro> cars = new ArrayList<>();
+	
 	public UsuarioDTO() {
 		super();
 	}
@@ -81,6 +84,7 @@ public class UsuarioDTO implements Serializable {
 		this.login = obj.getLogin();
 		this.password = obj.getPassword();
 		this.phone = obj.getPhone();
-		this.cars = obj.getCars().stream().map(x -> x.getId()).collect(Collectors.toList());
+		this.cars = obj.getCars();
 	}
+	
 }

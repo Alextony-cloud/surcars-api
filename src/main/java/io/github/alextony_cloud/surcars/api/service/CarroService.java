@@ -18,9 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class CarroService {
 
 	private final CarroRepository repository;
-	private final UsuarioService usuarioService;
-	
-	
+	private final AuthService authService;
 
 	public List<Carro> findAll() {
 		return repository.findAll();
@@ -37,14 +35,14 @@ public class CarroService {
 	}
 
 	private Carro newCar(CarroDTO carroDTO) {
-		Usuario user = usuarioService.findById(carroDTO.getUser());
 		
 		Carro carro = new Carro();
 		if(carroDTO.getId() != null) {
 			carro.setId(carroDTO.getId());
 		}
 		validByLicencePlate(carroDTO);
-		carro.setUser(user);
+		Usuario usuario = authService.getAuthenticatedUser();
+		carro.setUsuario(usuario);
 		carro.setYear(carroDTO.getYear());
 		carro.setColor(carroDTO.getColor());
 		carro.setLicensePlate(carroDTO.getLicensePlate());

@@ -27,10 +27,12 @@ public class DBService {
 		Usuario u1 = new Usuario(null,"Paulo","Abrão","paulo@mail.com",LocalDate.parse("05/08/1993",formatter),"pauloX",encoder.encode("123"),"81009666894");
 		Carro car1 = new Carro(null,2014,"PDV-1020","Ford","Azul Marinho", u1);
 		
-		u1.getCars().add(car1);
+		Carro car2 = new Carro(null,2024,"PDV-1031","Fiat","Preto", u1);
+		
+	//	u1.getCars().addAll(Arrays.asList(car1, car2));
 		
 		usuarioRepository.saveAll(Arrays.asList(u1));
-		carroRepository.saveAll(Arrays.asList(car1));
+		carroRepository.saveAll(Arrays.asList(car1,car2));
 		
 	}
 }

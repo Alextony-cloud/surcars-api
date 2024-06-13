@@ -54,8 +54,8 @@ public class UsuarioController {
 	@PostMapping
 	public ResponseEntity<UsuarioDTO> create(@ApiParam(name = "corpo", value = "Representação de um novo usuario") @RequestBody @Valid UsuarioDTO usuarioDTO){
 		Usuario newObj = service.create(usuarioDTO);
-		UsuarioDTO dto = new UsuarioDTO(newObj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+		UsuarioDTO newObjDto = new UsuarioDTO(newObj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObjDto.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	

@@ -35,6 +35,7 @@ public class CarroController {
 
 	private final CarroService service;
 	
+	
 
 	@ApiOperation("Busca todos os carros")
 	@GetMapping
@@ -55,8 +56,8 @@ public class CarroController {
 	@PostMapping
 	public ResponseEntity<CarroDTO> create(@ApiParam(name = "corpo", value = "Representação de um novo carro")  @RequestBody @Valid CarroDTO carroDTO){
 		Carro newObj = service.create(carroDTO);
-		CarroDTO dto = new CarroDTO(newObj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+		CarroDTO newObjDto = new CarroDTO(newObj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObjDto.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	

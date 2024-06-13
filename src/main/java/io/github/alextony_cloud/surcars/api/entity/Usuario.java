@@ -75,7 +75,7 @@ public class Usuario implements Serializable{
 	private String phone;
 	
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") // CascadeType.ALL pode ser ajustado conforme necessário
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true) // CascadeType.ALL pode ser ajustado conforme necessário
 	private List<Carro> cars = new ArrayList<>();
 	
 	 private LocalDateTime createdAt;
@@ -105,6 +105,7 @@ public class Usuario implements Serializable{
 		this.login = obj.getLogin();
 		this.password = obj.getPassword();
 		this.phone = obj.getPhone();
+		this.cars = obj.getCars();
 	}
 	
 	@PrePersist
